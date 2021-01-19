@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "main.py", line 21, in <module>
+    time.sleep(1)
+  File "/home/ubuntu/poe_hat/waveshare_POE_HAT_B/POE_HAT_B.py", line 53, in POE_HAT_Display
+    ip = self.GET_IP()
+  File "/home/ubuntu/poe_hat/waveshare_POE_HAT_B/POE_HAT_B.py", line 38, in GET_IP
+    s.connect(('8.8.8.8',80))
+OSError: [Errno 101] Network is unreachable
