@@ -52,7 +52,7 @@ class POE_HAT_B:
         draw = ImageDraw.Draw(image1)  
         ip = self.GET_IP()
         temp = self.GET_Temp()
-        draw.text((0,1), 'IP:'+str(ip), font = font, fill = 0)
+        draw.text((0,1), str(ip), font = font, fill = 0)
         draw.text((0,15), 'Temp:'+ str(((int)(temp*10))/10.0), font = font, fill = 0)
         if(temp>=FAN_TEMP):
             self.FAN_MODE = 1

@@ -7,12 +7,15 @@ sudo apt install \
 	ibjpeg-dev zlib1g-dev libfreetype6-dev libtiff5 libatlas-base-dev\
 	lm-sensors \
 	wiringpi \
+	docker.io \
+	libffi-dev \
 	-y
 
 sudo ln -s /usr/bin/python3 /usr/bin/python
 sudo ln -s /usr/bin/pip3 /usr/bin/pip
 
 sudo pip install \
+	docker-compose \
 	smbus2 \
 	RPi.GPIO \
 	pipenv
@@ -26,4 +29,10 @@ sudo groupadd gpio
 sudo chown root:gpio /dev/gpiomem
 sudo chmod g+rw /dev/gpiomem
 sudo adduser ubuntu gpio
+sudo adduser ubuntu docker
+
+sudo cp poe_hat.service /etc/systemd/system/
+systemctl enable poe_hat.service
+
+
 sudo shutdown -r now
