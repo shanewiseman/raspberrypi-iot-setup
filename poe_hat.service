@@ -5,9 +5,8 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=ubuntu
 WorkingDirectory=/home/ubuntu/raspberrypi-iot-setup/poe_hat/
-ExecStart=/home/ubuntu/.local/bin/pipenv run python main.py
+ExecStart=/usr/local/bin/pipenv run python main.py
 
 [Install]
 WantedBy=multi-user.target
