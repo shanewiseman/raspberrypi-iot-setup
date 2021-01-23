@@ -4,7 +4,7 @@ sudo apt upgrade -y
 sudo apt install \
 	python3-pip \
 	i2c-tools \
-	ibjpeg-dev zlib1g-dev libfreetype6-dev libtiff5 libatlas-base-dev\
+	ibjpeg-dev zlib1g-dev libfreetype6-dev libtiff5 libatlas-base-dev \
 	lm-sensors \
 	wiringpi \
 	docker.io \
