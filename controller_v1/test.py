@@ -1,4 +1,5 @@
 import RPi.GPIO as gpio
+import sys
 import time
 import datetime
 
@@ -36,7 +37,8 @@ gpio.setup(INPUT_3, gpio.IN, gpio.PUD_UP)
 FURNACE_SWITCH = RELAY_1
 ZONE_3_SWITCH = RELAY_2
 HOT_WATER_SWITCH = RELAY_3
-FAN_SWITCH = OUTPUT_2
+FAN_LOW = OUTPUT_1
+FAN_HIGH = OUTPUT_2
 
 ZONE_1_CALL = INPUT_2
 ZONE_2_CALL = INPUT_1
@@ -69,6 +71,7 @@ while True:
             ct = datetime.datetime.now() 
             print("current time:-", ct)
 
+
         if input_call(ZONE_2_CALL) and not z2:
             print("Zone 2 Start: {}".format(input_call(ZONE_2_CALL)))
             z2 = True 
@@ -85,6 +88,7 @@ while True:
         else:
             heat_call = False
 
+        sys.stdout.flush()
 ###############################################################################
         
         if not input_call(FURNACE_SWITCH) and heat_call:
@@ -93,12 +97,32 @@ while True:
             print("current time:-", ct)
             toggle_switch(FURNACE_SWITCH, True)
 
+            c_time = datetime.datetime.now().time()
+            if datetime.time(9,0) >= c_time or datetime.time(18,0) <= c_time:
+                print("FAN HIGH")
+                toggle_switch(FAN_LOW, False)
+                time.sleep(1)
+                toggle_switch(FAN_HIGH, True)
+            else:
+                print("FAN LOW")
+                toggle_switch(FAN_LOW, True)
+
+            print("\n\n")
+
+
         elif input_call(FURNACE_SWITCH) and not heat_call:
             print("HEAT OFF")
             ct = datetime.datetime.now() 
             print("current time:-", ct)
+            print("\n\n")
             toggle_switch(FURNACE_SWITCH, False)
+            toggle_switch(FAN_HIGH, False)
+            time.sleep(1)
+            toggle_switch(FAN_LOW, True)
 
+
+
+        sys.stdout.flush()
 ################################################################################
 
         water_call = input_call(HOT_WATER_CALL)
@@ -108,12 +132,15 @@ while True:
             print("WATER ON")
             ct = datetime.datetime.now() 
             print("current time:-", ct)
+            print("\n\n")
         elif input_call(HOT_WATER_SWITCH) and not water_call:
             toggle_switch(HOT_WATER_SWITCH, False)
             print("WATER OFF")
             ct = datetime.datetime.now() 
             print("current time:-", ct)
 
+            print("\n\n")
+        sys.stdout.flush()
         time.sleep(1)
     except KeyboardInterrupt:
         gpio.cleanup()
